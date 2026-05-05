@@ -28,7 +28,7 @@ class UsersListViewModel(dataRepository: GithubRepository): ViewModel() {
         val location: String,
     )
 
-    var _uiState: StateFlow<UiState> = dataRepository.getUsers().map<List<User>, UiState> { users ->
+    var uiState: StateFlow<UiState> = dataRepository.getUsers().map<List<User>, UiState> { users ->
         UiState.Success(users.map { it.toView() })
         }
         .catch { e -> emit(UiState.Error(e.message ?: "Unknown Error")) }

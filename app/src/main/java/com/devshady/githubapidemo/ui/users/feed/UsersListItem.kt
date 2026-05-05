@@ -26,7 +26,7 @@ import coil.transform.CircleCropTransformation
 import com.devshady.githubapidemo.R
 
 @Composable
-fun UsersListItem() {
+fun UsersListItem(user: UsersListViewModel.UserView) {
     val context = LocalContext.current
 
     Card(
@@ -44,22 +44,22 @@ fun UsersListItem() {
             ) {
                 AsyncImage(
                     model = ImageRequest.Builder(context)
-                        .data("https://avatars.githubusercontent.com/u/1?v=4")
+                        .data(user.profileUrl)
                         .placeholder(R.drawable.ic_launcher_background)
                         .transformations(CircleCropTransformation())
                         .build(),
                     modifier = Modifier.size(100.dp),
                     contentDescription = "profile photo"
                 )
-                Text(text = "First and Last Name", fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                Text(text = user.name, fontSize = 16.sp, fontWeight = FontWeight.Bold)
             }
             Spacer(Modifier.width(16.dp))
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(text = "Company", fontSize = 16.sp, fontWeight = FontWeight.Bold)
-                Text(text = "blog link",  fontSize = 12.sp, fontWeight = FontWeight.Medium)
-                Text(text = "location",  fontSize = 12.sp, fontWeight = FontWeight.Normal)
+                Text(text = user.company, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                Text(text = user.blogUrl,  fontSize = 12.sp, fontWeight = FontWeight.Medium)
+                Text(text = user.location,  fontSize = 12.sp, fontWeight = FontWeight.Normal)
             }
         }
     }
