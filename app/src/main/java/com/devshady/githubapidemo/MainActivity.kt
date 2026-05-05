@@ -51,7 +51,7 @@ class MainActivity : ComponentActivity() {
                             val usersListViewModel = viewModel<UsersListViewModel>(
                                 factory = object : ViewModelProvider.Factory {
                                     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                                        return UsersListViewModel(application.mockRepository) as T
+                                        return UsersListViewModel(application.repository) as T
                                     }
                                 }
                             )

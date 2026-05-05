@@ -45,6 +45,7 @@ fun UsersListItem(user: UsersListViewModel.UserView) {
                 AsyncImage(
                     model = ImageRequest.Builder(context)
                         .data(user.profileUrl)
+                        //TODO differentiate shimmer for loading and error placeholder image
                         .placeholder(R.drawable.ic_launcher_background)
                         .transformations(CircleCropTransformation())
                         .build(),
