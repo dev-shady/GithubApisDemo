@@ -6,10 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.devshady.githubapidemo.domain.GithubRepository
-import com.devshady.githubapidemo.domain.User
 import com.devshady.githubapidemo.domain.UserDetails
 import com.devshady.githubapidemo.navigation.Route
-import com.devshady.githubapidemo.ui.users.feed.UsersListViewModel.UiState
 import com.devshady.githubapidemo.ui.users.feed.toDetailsView
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -48,9 +46,6 @@ class UserDetailsViewModel @Inject constructor(savedStateHandle: SavedStateHandl
         }
         .catch { e ->
             emit(DetailsUiState.Error(e.message ?: "Unknown Error"))
-            Log.d("aamku stacktrace", e.stackTrace.toString())
-            Log.d("aamku message", e.message.toString())
-            Log.d("aamku cause", e.cause.toString())
         }
         .stateIn(
             scope = viewModelScope,

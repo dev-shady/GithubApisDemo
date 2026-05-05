@@ -19,6 +19,7 @@ kotlinxSerializationConverter = "1.0.0"
 ksp = "2.2.10-2.0.2"
 hilt = "2.59.2"
 hiltNavigation = "1.2.0"
+paging = "3.5.0-rc01"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -48,6 +49,11 @@ hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
 # The bridge for your NavHost
 hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigation" }
+# Core Paging 3 library
+androidx-paging-runtime = { group = "androidx.paging", name = "paging-runtime", version.ref = "paging" }
+# Integration for Jetpack Compose
+androidx-paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

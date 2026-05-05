@@ -1,5 +1,6 @@
 package com.devshady.githubapidemo.data.di
 
+import com.devshady.githubapidemo.data.paging.UserPagingSource
 import com.devshady.githubapidemo.data.remote.GithubApi
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
@@ -55,5 +56,9 @@ object NetworkModule {
 
     @Provides
     fun provideIoDispatcher(): CoroutineDispatcher = Dispatchers.IO
+
+    @Provides
+    @Singleton
+    fun provideUserPagingSource(api: GithubApi): UserPagingSource = UserPagingSource(api)
 
 }

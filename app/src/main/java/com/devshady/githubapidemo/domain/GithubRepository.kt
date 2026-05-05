@@ -1,9 +1,9 @@
 package com.devshady.githubapidemo.domain
 
+import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 
 interface GithubRepository {
-    fun getUsers(): Flow<List<User>>
-    suspend fun loadMoreUsers(): List<User>
+    fun getPagedUsers(): Flow<PagingData<User>>
     fun getUser(userId: String) : Flow<UserDetails> //TODO have separate models
 }

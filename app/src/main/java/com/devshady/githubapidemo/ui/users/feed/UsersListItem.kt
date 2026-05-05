@@ -25,10 +25,11 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.transform.CircleCropTransformation
 import com.devshady.githubapidemo.R
+import com.devshady.githubapidemo.domain.User
 
 @Composable
 fun UsersListItem(
-    user: UsersListViewModel.UserView,
+    user: User,
     onClick: (String) -> Unit
     ) {
     val context = LocalContext.current

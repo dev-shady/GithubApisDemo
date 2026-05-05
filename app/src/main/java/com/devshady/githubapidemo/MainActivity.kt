@@ -13,14 +13,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.devshady.githubapidemo.navigation.Route
 import com.devshady.githubapidemo.ui.theme.GithubApiDemoTheme
 import com.devshady.githubapidemo.ui.users.details.UserDetails
@@ -54,7 +52,7 @@ class MainActivity : ComponentActivity() {
 
                         composable<Route.UsersList> {
                             val usersListViewModel: UsersListViewModel = hiltViewModel()
-                            val uiState by usersListViewModel.uiState.collectAsStateWithLifecycle()
+                            val uiState = usersListViewModel.uiState.collectAsLazyPagingItems()
                             UsersList(uiState) { userId ->
                                 navController.navigate(Route.UserDetails(id = userId))
                             }
