@@ -8,4 +8,6 @@ interface RemoteDataSource {
     suspend fun getUsers() : List<UserDto>
     suspend fun getUser(id: String) : UserDetailsDto
 
+    suspend fun getNextPage(): List<UserDto>
+
 }
