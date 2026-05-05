@@ -9,8 +9,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import javax.inject.Inject
 
-class GithubRepositoryImpl(
+class GithubRepositoryImpl @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): GithubRepository {

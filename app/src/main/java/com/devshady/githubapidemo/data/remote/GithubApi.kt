@@ -1,4 +1,4 @@
-package com.devshady.githubapidemo.data.retrofit
+package com.devshady.githubapidemo.data.remote
 
 import com.devshady.githubapidemo.data.UserDetailsDto
 import com.devshady.githubapidemo.data.UserDto

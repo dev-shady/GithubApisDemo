@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -26,7 +27,9 @@ import com.devshady.githubapidemo.ui.users.details.UserDetails
 import com.devshady.githubapidemo.ui.users.details.UserDetailsViewModel
 import com.devshady.githubapidemo.ui.users.feed.UsersList
 import com.devshady.githubapidemo.ui.users.feed.UsersListViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,13 +53,7 @@ class MainActivity : ComponentActivity() {
                     NavHost(navController= navController, startDestination = Route.UsersList) {
 
                         composable<Route.UsersList> {
-                            val usersListViewModel = viewModel<UsersListViewModel>(
-                                factory = object : ViewModelProvider.Factory {
-                                    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                                        return UsersListViewModel(application.repository) as T
-                                    }
-                                }
-                            )
+                            val usersListViewModel: UsersListViewModel = hiltViewModel()
                             val uiState by usersListViewModel.uiState.collectAsStateWithLifecycle()
                             UsersList(uiState) { userId ->
                                 navController.navigate(Route.UserDetails(id = userId))
@@ -64,13 +61,7 @@ class MainActivity : ComponentActivity() {
                         }
                         composable<Route.UserDetails> { backStackEntry ->
                             val details: Route.UserDetails = backStackEntry.toRoute()
-                            val userDetailsViewModel = viewModel<UserDetailsViewModel> (
-                                factory = object: ViewModelProvider.Factory {
-                                    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                                        return UserDetailsViewModel(details.id, application.repository) as T
-                                    }
-                                }
-                            )
+                            val userDetailsViewModel: UserDetailsViewModel = hiltViewModel()
                             val detailsUiState by userDetailsViewModel.uiState.collectAsStateWithLifecycle()
                             UserDetails(detailsUiState)
                         }
