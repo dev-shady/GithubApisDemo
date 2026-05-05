@@ -1,5 +1,6 @@
 package com.devshady.githubapidemo.ui.users.feed
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -26,13 +27,19 @@ import coil.transform.CircleCropTransformation
 import com.devshady.githubapidemo.R
 
 @Composable
-fun UsersListItem(user: UsersListViewModel.UserView) {
+fun UsersListItem(
+    user: UsersListViewModel.UserView,
+    onClick: (String) -> Unit
+    ) {
     val context = LocalContext.current
 
     Card(
         modifier = Modifier.fillMaxWidth()
             .clip(RoundedCornerShape(12.dp))
             .padding(4.dp)
+            .clickable {
+                onClick(user.name)
+            }
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),

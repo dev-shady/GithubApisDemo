@@ -9,6 +9,7 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFact
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 
 class GithubDemoApplication: Application() {
@@ -16,13 +17,20 @@ class GithubDemoApplication: Application() {
     val json = Json {
         ignoreUnknownKeys = true
         coerceInputValues = true
+        explicitNulls = false
     }
 
     val contentType = "application/json".toMediaType()
     val mockRepository = MockGithubRepository()
+
+    val okHttpClient = OkHttpClient.Builder()
+        .addInterceptor(HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        })
+        .build()
     val retrofit = Retrofit.Builder()
         .baseUrl("https://api.github.com") //TODO use Build.Config
-        .client(OkHttpClient())
+        .client(okHttpClient) //TODO Add check for debug build
         .addConverterFactory(json.asConverterFactory(contentType))
         .build()
 

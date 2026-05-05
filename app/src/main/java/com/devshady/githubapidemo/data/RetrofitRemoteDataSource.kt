@@ -9,4 +9,8 @@ class RetrofitRemoteDataSource(val api: GithubApi): RemoteDataSource {
             pageSize = 10
         )
     }
+
+    override suspend fun getUser(id: String): UserDetailsDto {
+        return api.getUser(id)
+    }
 }

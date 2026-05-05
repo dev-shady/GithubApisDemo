@@ -2,6 +2,7 @@ package com.devshady.githubapidemo.data
 
 import com.devshady.githubapidemo.domain.GithubRepository
 import com.devshady.githubapidemo.domain.User
+import com.devshady.githubapidemo.domain.UserDetails
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -53,7 +54,7 @@ class MockGithubRepository: GithubRepository {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getUser(userId: String): User {
+    override fun getUser(userId: String): Flow<UserDetails>  {
         TODO("Not yet implemented")
     }
 }

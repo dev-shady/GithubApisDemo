@@ -31,7 +31,9 @@ class UsersListViewModel(dataRepository: GithubRepository): ViewModel() {
     var uiState: StateFlow<UiState> = dataRepository.getUsers().map<List<User>, UiState> { users ->
         UiState.Success(users.map { it.toView() })
         }
-        .catch { e -> emit(UiState.Error(e.message ?: "Unknown Error")) }
+        .catch { e ->
+            emit(UiState.Error(e.message ?: "Unknown Error"))
+        }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),

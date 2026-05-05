@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.ViewModel
@@ -22,6 +23,7 @@ import androidx.navigation.toRoute
 import com.devshady.githubapidemo.navigation.Route
 import com.devshady.githubapidemo.ui.theme.GithubApiDemoTheme
 import com.devshady.githubapidemo.ui.users.details.UserDetails
+import com.devshady.githubapidemo.ui.users.details.UserDetailsViewModel
 import com.devshady.githubapidemo.ui.users.feed.UsersList
 import com.devshady.githubapidemo.ui.users.feed.UsersListViewModel
 
@@ -55,14 +57,22 @@ class MainActivity : ComponentActivity() {
                                     }
                                 }
                             )
-                            val uiState = usersListViewModel.uiState.collectAsStateWithLifecycle()
-                            UsersList(uiState.value) { userId ->
+                            val uiState by usersListViewModel.uiState.collectAsStateWithLifecycle()
+                            UsersList(uiState) { userId ->
                                 navController.navigate(Route.UserDetails(id = userId))
                             }
                         }
                         composable<Route.UserDetails> { backStackEntry ->
                             val details: Route.UserDetails = backStackEntry.toRoute()
-                            UserDetails(details.id)
+                            val userDetailsViewModel = viewModel<UserDetailsViewModel> (
+                                factory = object: ViewModelProvider.Factory {
+                                    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                                        return UserDetailsViewModel(details.id, application.repository) as T
+                                    }
+                                }
+                            )
+                            val detailsUiState by userDetailsViewModel.uiState.collectAsStateWithLifecycle()
+                            UserDetails(detailsUiState)
                         }
                     }
                 }

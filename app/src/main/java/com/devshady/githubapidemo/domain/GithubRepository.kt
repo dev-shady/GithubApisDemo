@@ -5,5 +5,5 @@ import kotlinx.coroutines.flow.Flow
 interface GithubRepository {
     fun getUsers(): Flow<List<User>>
     suspend fun loadMoreUsers(): List<User>
-    suspend fun getUser(userId: String) : User //TODO have separate models
+    fun getUser(userId: String) : Flow<UserDetails> //TODO have separate models
 }

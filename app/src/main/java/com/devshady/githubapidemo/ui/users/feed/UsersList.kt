@@ -38,7 +38,7 @@ fun UsersList(
                 items(
                     items= uiState.data
                 ) {
-                    UsersListItem(it)
+                    UsersListItem(it, onClick)
                 }
             }
 
