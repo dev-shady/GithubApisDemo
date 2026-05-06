@@ -2,8 +2,9 @@ package com.devshady.githubapidemo.ui.users.feed
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.devshady.githubapidemo.domain.AppException
 import com.devshady.githubapidemo.domain.GithubRepository
-import com.devshady.githubapidemo.domain.User
+import com.devshady.githubapidemo.domain.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -31,9 +32,22 @@ class UsersListViewModel @Inject constructor(dataRepository: GithubRepository): 
         val location: String,
     )
 
-    var uiState: StateFlow<UiState> = dataRepository.getUsers().map<List<User>, UiState> { users ->
-        UiState.Success(users.map { it.toView() })
+    var uiState: StateFlow<UiState> = dataRepository.getUsers().map { resource ->
+        when (resource) {
+            is Resource.Failure -> {
+                val msg =  when (resource.e) {
+                    AppException.NetworkError -> "NetworkError"
+                    AppException.ServerError -> "ServerError"
+                    is AppException.UnknownError -> "UnknownError"
+                }
+                UiState.Error(msg)
+            }
+
+            is Resource.Success -> {
+                UiState.Success(resource.data.map {it.toView()})
+            }
         }
+    }
         .catch { e ->
             emit(UiState.Error(e.message ?: "Unknown Error"))
         }

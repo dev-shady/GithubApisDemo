@@ -10,22 +10,21 @@ class RetrofitRemoteDataSource @Inject constructor(private val api: GithubApi): 
 
     private var nextUrl: String? = null
 
-    override suspend fun getUsers(): List<UserDto> {
+    override suspend fun getUsers(): Response<List<UserDto>> {
         val response = api.getUsers(
             pageSize = 10
         )
         return handleResponse(response)
     }
 
-    private fun handleResponse(response: Response<List<UserDto>>): List<UserDto> {
+    private fun handleResponse(response: Response<List<UserDto>>): Response<List<UserDto>> {
         if (response.isSuccessful) {
             val linkHeader = response.headers()["Link"]
             nextUrl = parseLinkHeader(linkHeader)
             Log.d("aamku retrofit ", "next= ${nextUrl}")
-            return response.body() ?: emptyList()
         }
 
-        throw Exception("API error")
+       return response
     }
 
     private fun parseLinkHeader(linkHeader: String?): String? {
@@ -40,8 +39,8 @@ class RetrofitRemoteDataSource @Inject constructor(private val api: GithubApi): 
         return response.body() ?: throw Exception("Network Error")
     }
 
-    override suspend fun getNextPage(): List<UserDto> {
-        if (nextUrl.isNullOrBlank()) return emptyList()
+    override suspend fun getNextPage(): Response<List<UserDto>> {
+        if (nextUrl.isNullOrBlank()) return Response.success(emptyList<UserDto>())
         val response = api.getUsersNextPage(nextUrl!!)
         return handleResponse(response)
     }
