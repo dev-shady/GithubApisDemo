@@ -60,6 +60,7 @@ dependencies {
     implementation(libs.kotlinx.serialization.converter)
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)
+    testImplementation(libs.junit.junit)
     ksp(libs.hilt.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(platform(libs.androidx.compose.bom))
@@ -68,4 +69,7 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.0")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:5.2.1")
+    testImplementation("junit:junit:4.13.2")
 }
