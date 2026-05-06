@@ -16,4 +16,7 @@ Accomplished:
 10. Run the App, App shows Loading text and then list of products (only title)
 
 Libraries Used:
-1. Kotlinx serialization, Hilt, Retrofit, Jetpack compose, Flow, Coroutines  
+1. Kotlinx serialization, Hilt, Retrofit, Jetpack compose, Flow, Coroutines
+
+Note:
+AGP 9.2.0 used in project, so anyone with AGP 8.x.x will face some issues while building.
